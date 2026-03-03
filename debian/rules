@@ -17,6 +17,10 @@
 KVERS ?=
 KSRC  ?= /lib/modules/$(KVERS)/build
 
+ifeq ($(KVERS),)
+export DH_OPTIONS = -Nxpmem-modules
+endif
+
 %:
 	dh $@
 
@@ -27,3 +31,9 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	dh_auto_configure -- $(if $(KVERS),--with-kernelvers=$(KVERS) --with-kerneldir=$(KSRC),--disable-kernel-module)
+
+override_dh_gencontrol:
+ifneq ($(KVERS),)
+	echo "kernel:Version=$(KVERS)" >> debian/xpmem-modules.substvars
+endif
+	dh_gencontrol
