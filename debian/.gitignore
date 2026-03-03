@@ -1,0 +1,18 @@
+# dpkg-buildpackage build artifacts
+.debhelper/
+autoreconf.after
+autoreconf.before
+debhelper-build-stamp
+debian
+files
+libxpmem/
+libxpmem-dev/
+libxpmem.debhelper.log
+libxpmem.debhelper.log
+libxpmem-dev.debhelper.log
+libxpmem.substvars
+libxpmem-dev.substvars
+xpmem-modules/
+xpmem-modules.debhelper.log
+xpmem-modules.substvars
+tmp/
