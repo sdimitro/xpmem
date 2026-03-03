@@ -7,6 +7,9 @@
 ## Current
 ### Features:
 #### Kernel driver:
+#### Userspace:
+ * Add KVERS/KSRC options to debian/rules to build and package the kernel
+   module for a specific kernel version during a Debian build
 ### Bugfixes:
 
 ## 2.7.4 (October 16, 2024)
