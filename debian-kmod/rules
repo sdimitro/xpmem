@@ -3,9 +3,7 @@
 # output every command that modifies files on the build system.
 #export DH_VERBOSE = 1
 
-ifndef KVERS
-$(error KVERS must be set to the target kernel version (e.g., make -f debian-kmod/rules KVERS=5.15.0-91-generic))
-endif
+KVERS ?= $(shell uname -r)
 
 %:
 	dh $@
