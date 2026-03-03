@@ -26,3 +26,14 @@ Description: libxpmem - userspace library of XPMEM
  memory of another process into its virtual address space.
  .
  This package includes the userspace library.
+
+Package: xpmem-modules
+Build-Profiles: <kmod>
+Architecture: any
+Depends: ${misc:Depends}
+Description: XPMEM kernel module
+ XPMEM is a Linux kernel module that enables a process to map the
+ memory of another process into its virtual address space.
+ .
+ This package provides the compiled kernel module. Build with
+ DEB_BUILD_PROFILES=kmod and optionally KVERS=<kernel-version>.

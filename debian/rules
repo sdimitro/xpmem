@@ -13,6 +13,7 @@
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+KVERS ?= $(shell uname -r)
 
 %:
 	dh $@
@@ -23,4 +24,20 @@ override_dh_auto_clean:
 	dh_auto_clean -- DIST_SUBDIRS='$$(SUBDIRS)'
 
 override_dh_auto_configure:
+ifneq (,$(filter kmod,$(DEB_BUILD_PROFILES)))
+	dh_auto_configure -- --with-kernelvers=$(KVERS) --with-module-prefix=/
+else
 	dh_auto_configure -- --disable-kernel-module
+endif
+
+override_dh_install:
+ifneq (,$(filter kmod,$(DEB_BUILD_PROFILES)))
+	# Fix udev rules: make install puts 56-xpmem.rules in /etc/, not /etc/udev/rules.d/
+	install -D -m 644 $(CURDIR)/debian/xpmem-modules/etc/56-xpmem.rules \
+		$(CURDIR)/debian/xpmem-modules/etc/udev/rules.d/56-xpmem.rules
+	rm $(CURDIR)/debian/xpmem-modules/etc/56-xpmem.rules
+	# Remove files belonging to the userspace library packages, not the kmod package
+	rm -rf $(CURDIR)/debian/xpmem-modules/usr
+else
+	dh_install
+endif
