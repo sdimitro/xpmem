@@ -74,6 +74,7 @@ AC_CONFIG_FILES([Makefile
                  cray-xpmem.pc
                  dkms.conf
                  debian/changelog
+                 debian-kmod/changelog
                  xpmem-dkms.spec
                  xpmem-kmod.spec
                  xpmem.spec

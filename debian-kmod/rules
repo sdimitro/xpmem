@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+ifndef KVERS
+$(error KVERS must be set to the target kernel version (e.g., make -f debian-kmod/rules KVERS=5.15.0-91-generic))
+endif
+
+%:
+	dh $@
+
+# Skip cleaning in the kernel/ that is part of the dist set.
+override_dh_auto_clean:
+	dh_auto_clean -- DIST_SUBDIRS='$$(SUBDIRS)'
+
+override_dh_auto_configure:
+	dh_auto_configure -- --with-kernelvers=$(KVERS) --with-module-prefix=/
+
+override_dh_install:
+	dh_install
+	install -D -m 644 56-xpmem.rules \
+		$(CURDIR)/debian/xpmem-modules/etc/udev/rules.d/56-xpmem.rules

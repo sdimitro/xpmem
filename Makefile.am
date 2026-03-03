@@ -20,7 +20,8 @@ EXTRA_DIST = \
 	xpmem-kmod.spec \
 	xpmem-dkms.spec \
 	dkms.conf \
-	debian
+	debian \
+	debian-kmod
 
 .version:
 	echo "#%Module" > $@
